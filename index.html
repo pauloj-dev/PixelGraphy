@@ -56,7 +56,7 @@
             <div class="card-heading"><span class="section-number">01</span><div><h3>Seus dados</h3><p>Adicione os nomes e valores.</p></div></div>
             <label class="field-label" for="chartTitle">TÍTULO DO GRÁFICO</label>
             <input class="text-input" id="chartTitle" maxlength="48" value="Horas de foco na semana" />
-            <div class="data-table-head"><span>CATEGORIA</span><span>VALOR</span><span></span></div>
+            <div class="data-table-head"><span>CATEGORIA</span><span>VALOR</span><span>COR</span><span></span></div>
             <div id="dataRows" class="data-rows"></div>
             <button class="add-row" id="addRow" type="button"><span>＋</span> Adicionar linha</button>
             <div class="divider"></div>
@@ -66,6 +66,11 @@
               <button class="type-button" data-type="line" type="button"><span class="type-icon icon-line">⌁</span>Linha</button>
               <button class="type-button" data-type="pie" type="button"><span class="type-icon icon-pie">◔</span>Pizza</button>
               <button class="type-button" data-type="donut" type="button"><span class="type-icon icon-donut">◉</span>Rosca</button>
+            </div>
+            <div class="axis-scale-control" id="axisScaleControl">
+              <label class="field-label" for="axisMax">ESCALA DO EIXO VERTICAL</label>
+              <div class="axis-max-row"><span>Máximo</span><input class="axis-max-input" id="axisMax" type="number" min="0.01" step="any" placeholder="Auto" aria-label="Máximo do eixo vertical" /></div>
+              <p>Vazio: escala automática em quatro intervalos.</p>
             </div>
             <div class="line-color-control" id="lineColorControl" hidden>
               <label class="field-label" for="lineColorPicker">COR DA LINHA</label>
