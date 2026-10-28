@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f1e8" />
+    <meta name="description" content="Transforme seus dados em gráficos pixel art e baixe imagens PNG prontas para compartilhar." />
+    <title>PixelGraphy — gráficos pixel art</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="PixelGraphy início">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span>pixel<span class="brand-light">graphy</span></span>
+      </a>
+      <div class="top-note"><span class="status-dot"></span> SEUS DADOS, EM PIXELS</div>
+      <a class="top-link" href="#editor">Começar <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="sparkle">✳</span> UM NOVO JEITO DE MOSTRAR NÚMEROS</div>
+          <h1>Dados com<br /><span class="title-highlight">outro pixel.</span></h1>
+          <p>Seus dados têm uma história. Dê a ela um visual pixel art e leve seu gráfico para qualquer lugar.</p>
+          <a class="primary-button hero-button" href="#editor">Criar meu gráfico <span aria-hidden="true">↓</span></a>
+          <div class="hero-footnote"><span class="mini-pixel"></span> GRÁTIS · SEM CADASTRO · PRONTO PARA BAIXAR</div>
+        </div>
+        <div class="hero-art" aria-label="Ilustração de um gráfico de barras em pixel art">
+          <div class="art-window">
+            <div class="window-top"><span></span><span></span><span></span><b>grafico_01.png</b><i>•••</i></div>
+            <div class="art-chart">
+              <div class="art-label">MEU PROGRESSO <span>↗ 24%</span></div>
+              <div class="art-plot"><div class="grid-lines"><i></i><i></i><i></i><i></i></div><div class="art-bars"><div class="art-bar"><b style="--h:38%"></b><span>SEG</span></div><div class="art-bar"><b style="--h:58%"></b><span>TER</span></div><div class="art-bar"><b style="--h:47%"></b><span>QUA</span></div><div class="art-bar"><b style="--h:78%"></b><span>QUI</span></div><div class="art-bar"><b style="--h:65%"></b><span>SEX</span></div><div class="art-bar"><b style="--h:96%"></b><span>SÁB</span></div></div></div>
+              <div class="art-legend"><span><i></i> HORAS DE FOCO</span><span>▦ 8-BIT EDITION</span></div>
+            </div>
+            <div class="floating-badge"><span>▧</span><div><b>PNG PRONTO</b><small>TRANSPARENTE</small></div><strong>↗</strong></div>
+          </div>
+          <div class="art-star star-one">✳</div><div class="art-star star-two">✦</div>
+          <div class="art-caption">feito de dados<br />e um pouco de nostalgia <span>↙</span></div>
+        </div>
+      </section>
+
+      <section class="editor-section" id="editor">
+        <div class="section-heading">
+          <div><div class="eyebrow"><span class="sparkle">✳</span> SEU ESTÚDIO</div><h2>Monte do seu jeito.</h2></div>
+          <div class="step-label"><span>01</span> DADOS <i>→</i> <span>02</span> ESTILO <i>→</i> <span class="active-step">03</span> DOWNLOAD</div>
+        </div>
+
+        <div class="studio-grid">
+          <aside class="controls-card">
+            <div class="card-heading"><span class="section-number">01</span><div><h3>Seus dados</h3><p>Adicione os nomes e valores.</p></div></div>
+            <label class="field-label" for="chartTitle">TÍTULO DO GRÁFICO</label>
+            <input class="text-input" id="chartTitle" maxlength="48" value="Horas de foco na semana" />
+            <div class="data-table-head"><span>CATEGORIA</span><span>VALOR</span><span></span></div>
+            <div id="dataRows" class="data-rows"></div>
+            <button class="add-row" id="addRow" type="button"><span>＋</span> Adicionar linha</button>
+            <div class="divider"></div>
+            <div class="card-heading compact-heading"><span class="section-number">02</span><div><h3>Tipo de gráfico</h3><p>Escolha como contar sua história.</p></div></div>
+            <div class="chart-type-grid" role="group" aria-label="Tipo de gráfico">
+              <button class="type-button selected" data-type="bar" type="button"><span class="type-icon icon-bar">▂▅▇</span>Barras</button>
+              <button class="type-button" data-type="line" type="button"><span class="type-icon icon-line">⌁</span>Linha</button>
+              <button class="type-button" data-type="pie" type="button"><span class="type-icon icon-pie">◔</span>Pizza</button>
+              <button class="type-button" data-type="donut" type="button"><span class="type-icon icon-donut">◉</span>Rosca</button>
+            </div>
+            <div class="line-color-control" id="lineColorControl" hidden>
+              <label class="field-label" for="lineColorPicker">COR DA LINHA</label>
+              <div class="line-color-options">
+                <div class="color-swatches" role="group" aria-label="Cores sugeridas">
+                  <button type="button" class="color-swatch selected" data-color="#316b4d" style="--swatch:#316b4d" aria-label="Verde" title="Verde"></button>
+                  <button type="button" class="color-swatch" data-color="#e7a95e" style="--swatch:#e7a95e" aria-label="Laranja" title="Laranja"></button>
+                  <button type="button" class="color-swatch" data-color="#df7b73" style="--swatch:#df7b73" aria-label="Coral" title="Coral"></button>
+                  <button type="button" class="color-swatch" data-color="#5d93a8" style="--swatch:#5d93a8" aria-label="Azul" title="Azul"></button>
+                  <button type="button" class="color-swatch" data-color="#8b82b7" style="--swatch:#8b82b7" aria-label="Lilás" title="Lilás"></button>
+                </div>
+                <label class="custom-color" for="lineColorPicker"><input type="color" id="lineColorPicker" value="#316b4d" aria-label="Escolher outra cor" /><span>Personalizar</span></label>
+              </div>
+            </div>
+            <div class="value-label-control">
+              <label class="field-label">RÓTULOS NO GRÁFICO</label>
+              <div class="label-mode-options" role="group" aria-label="Exibição dos rótulos">
+                <button type="button" class="label-mode selected" data-mode="value">Números</button>
+                <button type="button" class="label-mode" data-mode="percent">Porcentagem</button>
+                <button type="button" class="label-mode" data-mode="none">Ocultar</button>
+              </div>
+            </div>
+          </aside>
+
+          <section class="preview-column" aria-label="Pré-visualização do gráfico">
+            <div class="preview-topline"><div><span class="live-dot"></span> PRÉ-VISUALIZAÇÃO AO VIVO</div><button class="icon-action" id="refreshButton" title="Atualizar gráfico" aria-label="Atualizar gráfico">↻</button></div>
+            <div class="preview-card">
+              <div class="preview-chart-head"><div><div class="chart-kicker">PIXELGRAPHY · 2026</div><h3 id="previewTitle">Horas de foco na semana</h3></div><div class="preview-tag"><span>▦</span> PIXEL ART</div></div>
+              <div class="canvas-wrap"><canvas id="chartCanvas" width="920" height="520" aria-label="Prévia do gráfico pixel art"></canvas></div>
+              <div class="preview-legend" id="previewLegend"></div>
+              <div class="canvas-foot"><span>8-BIT EDITION</span><span><i class="mini-pixel"></i> FEITO POR VOCÊ</span></div>
+            </div>
+            <div class="export-card">
+              <div class="export-copy"><span class="export-icon">↓</span><div><b>Ficou do seu jeito?</b><small>Baixe em PNG e use onde quiser.</small></div></div>
+              <div class="export-actions"><label class="transparent-toggle"><input type="checkbox" id="transparentBg" /><span class="toggle-ui"></span><span>Fundo transparente</span></label><button class="primary-button download-button" id="downloadButton">Baixar PNG <span>↓</span></button></div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer><a class="brand footer-brand" href="#inicio"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>pixel<span class="brand-light">graphy</span></span></a><span>Feito com <b>✳</b> e um espírito 8-bit.</span><a href="#editor">SEU PRÓXIMO GRÁFICO ↗</a></footer>
+    <script src="app.js"></script>
+  </body>
+</html>
