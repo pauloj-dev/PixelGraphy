@@ -109,3 +109,22 @@ describe('format', () => {
     for (const t of Object.values(CHART_THEMES)) expect(contrast(t.ink, t.bg)).toBeGreaterThan(4.5)
   })
 })
+
+describe('frame', () => {
+  const area = (s, c) => s.rects.filter(r => r.c === c).reduce((sum, r) => sum + r.w * r.h, 0)
+  it('uses the chosen frame colour and falls back to the theme', () => {
+    const custom = buildScene({ data, frame: true, frameColor: '#ff00aa' })
+    expect(area(custom, '#ff00aa')).toBeGreaterThan(2 * (custom.width + custom.height) * 4 - 100)
+    const auto = buildScene({ data, frame: true, frameColor: 'nope' })
+    expect(area(auto, '#ff00aa')).toBe(0)
+  })
+  it('traces the frame progressively during the entrance animation', () => {
+    const at = t => area(buildScene({ data, frame: true, frameColor: '#ff00aa' }, { progress: t }), '#ff00aa')
+    expect(at(0)).toBe(0)
+    expect(at(0.2)).toBeGreaterThan(0)
+    expect(at(0.2)).toBeLessThan(at(0.5))
+    expect(at(0.5)).toBeLessThan(at(1))
+    expect(at(0.65)).toBeLessThan(at(1))
+    expect(at(0.7)).toBe(at(1)) // fully traced by 70% of the timeline
+  })
+})

@@ -29,6 +29,7 @@ export function normalizeProject(raw, lang) {
   if (!raw || !Array.isArray(raw.data)) return presetProject('week', lang)
   const out = { ...DEFAULT_STYLE }
   for (const key of Object.keys(DEFAULT_STYLE)) if (raw[key] !== undefined) out[key] = raw[key]
+  for (const key of ['seriesColor', 'frameColor']) if (!isHex(out[key])) out[key] = null
   out.title = String(raw.title ?? '').slice(0, 64)
   out.subtitle = String(raw.subtitle ?? '').slice(0, 90)
   out.data = raw.data.slice(0, MAX_ROWS).map(d => ({

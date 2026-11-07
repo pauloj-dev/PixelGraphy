@@ -33,19 +33,7 @@ export default function StylePanel({ project, dispatch }) {
         ))}
       </fieldset>
 
-      {series && (
-        <Field label={t('style.series')}>
-          <div className="swatches" role="group" aria-label={t('style.series')}>
-            {palette.map(c => (
-              <button key={c} type="button" className={`swatch ${seriesColor(project) === c ? 'is-on' : ''}`} style={{ '--c': c }} aria-label={c} aria-pressed={seriesColor(project) === c} onClick={() => set({ seriesColor: c })} />
-            ))}
-            <label className="swatch swatch-custom" title={t('style.custom')}>
-              <input type="color" aria-label={t('style.custom')} value={seriesColor(project)} onChange={e => set({ seriesColor: e.target.value })} />
-              <PixelIcon name="plus" size={12} />
-            </label>
-          </div>
-        </Field>
-      )}
+      {series && <ColorSwatches label={t('style.series')} customLabel={t('style.custom')} colors={palette} value={seriesColor(project)} onChange={seriesColor => set({ seriesColor })} />}
 
       <Segmented
         className="theme-seg"
@@ -86,6 +74,39 @@ export default function StylePanel({ project, dispatch }) {
         <Toggle label={t('style.options.frame')} checked={project.frame} onChange={frame => set({ frame })} />
         <Toggle label={t('style.options.watermark')} checked={project.watermark} onChange={watermark => set({ watermark })} />
       </fieldset>
+
+      {project.frame && (
+        <ColorSwatches
+          label={t('style.frameColor')}
+          hint={t('style.frameHint')}
+          customLabel={t('style.custom')}
+          autoLabel={t('style.frameAuto')}
+          colors={[...new Set(['#1f2a24', '#fbf8ef', '#d8ed75', ...palette.slice(0, 6)])]}
+          value={project.frameColor}
+          onChange={frameColor => set({ frameColor })}
+        />
+      )}
     </div>
+  )
+}
+
+/** Swatch picker: optional automatic choice, preset colours and a custom colour input. */
+function ColorSwatches({ label, hint, colors, value, onChange, customLabel, autoLabel }) {
+  const custom = !!value && !colors.includes(value)
+  return (
+    <Field label={label} hint={hint}>
+      <div className="swatches" role="group" aria-label={label}>
+        {autoLabel && (
+          <button type="button" className={`swatch swatch-auto ${!value ? 'is-on' : ''}`} aria-label={autoLabel} title={autoLabel} aria-pressed={!value} onClick={() => onChange(null)} />
+        )}
+        {colors.map(c => (
+          <button key={c} type="button" className={`swatch ${value === c ? 'is-on' : ''}`} style={{ '--c': c }} aria-label={c} title={c} aria-pressed={value === c} onClick={() => onChange(c)} />
+        ))}
+        <label className={`swatch swatch-custom ${custom ? 'is-on' : ''}`} title={customLabel} style={custom ? { background: value } : undefined}>
+          <input type="color" aria-label={customLabel} value={value || '#888888'} onChange={e => onChange(e.target.value)} />
+          {!custom && <PixelIcon name="plus" size={12} />}
+        </label>
+      </div>
+    </Field>
   )
 }

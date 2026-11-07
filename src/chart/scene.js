@@ -1,6 +1,6 @@
 import { textRects, measureText, fitText, FONT_HEIGHT } from './font.js'
 import { PALETTES, resolveTheme } from './palettes.js'
-import { shade, mix, readableOn, ensureContrast } from './color.js'
+import { shade, mix, readableOn, ensureContrast, isHex } from './color.js'
 import { makeFormatter, niceScale, toNumber } from './format.js'
 
 export const ASPECTS = { '16:9': [800, 450], '4:3': [800, 600], '1:1': [720, 720], '4:5': [720, 900] }
@@ -30,6 +30,7 @@ export const DEFAULT_STYLE = {
   watermark: true,
   transparent: false,
   seriesColor: null,
+  frameColor: null,
   prefix: '',
   suffix: '',
   decimals: 'auto',
@@ -73,11 +74,37 @@ export function buildScene(config, { progress = 1, siteTheme = 'light' } = {}) {
 
   const pad = Math.max(28, Math.round(W * 0.04 / 4) * 4)
 
-  // Image frame
+  // Image frame: notched pixel band + thin inner rule. During the entrance
+  // animation it is traced clockwise from the top-left corner in stepped segments.
   if (cfg.frame) {
-    const f = Math.max(4, p / 2)
-    rect(f, 0, W - 2 * f, f, theme.axis); rect(f, H - f, W - 2 * f, f, theme.axis)
-    rect(0, f, f, H - 2 * f, theme.axis); rect(W - f, f, f, H - 2 * f, theme.axis)
+    const color = isHex(cfg.frameColor) ? cfg.frameColor : theme.axis
+    const f = Math.max(4, p / 2), gi = f + 4
+    const ft = t >= 1 ? 1 : Math.min(1, t / 0.7)
+    const traced = 1 - (1 - ft) ** 2
+    const trace = (sides, unit) => {
+      const total = sides.reduce((s, [len]) => s + len, 0)
+      let remain = traced >= 1 ? total : Math.floor((total * traced) / unit) * unit
+      for (const [len, draw] of sides) {
+        const d = Math.min(len, remain)
+        if (d > 0) draw(d)
+        remain -= len
+      }
+    }
+    trace([
+      [W - 2 * f, d => rect(f, 0, d, f, color)],
+      [H - 2 * f, d => rect(W - f, f, f, d, color)],
+      [W - 2 * f, d => rect(W - f - d, H - f, d, f, color)],
+      [H - 2 * f, d => rect(0, H - f - d, f, d, color)],
+    ], 2 * f)
+    const rule = mix(color, theme.bg, 0.45)
+    trace([
+      [W - 2 * gi, d => rect(gi, gi, d, 2, rule)],
+      [H - 2 * gi, d => rect(W - gi - 2, gi, 2, d, rule)],
+      [W - 2 * gi, d => rect(W - gi - d, H - gi - 2, d, 2, rule)],
+      [H - 2 * gi, d => rect(gi, H - gi - d, 2, d, rule)],
+    ], 2 * f)
+    // corner rivets pop in once the trace closes
+    if (traced >= 1) for (const [x, y] of [[gi, gi], [W - gi - 4, gi], [gi, H - gi - 4], [W - gi - 4, H - gi - 4]]) rect(x, y, 4, 4, color)
   }
 
   // Header

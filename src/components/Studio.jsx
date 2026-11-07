@@ -14,7 +14,7 @@ export default function Studio({ project, dispatch, siteTheme, onPreset, onLoadP
   const reduced = useReducedMotion()
   const [tab, setTab] = useState('data')
   const [replay, setReplay] = useState(0)
-  const progress = useProgress(`${project.type}-${project.aspect}-${replay}`, { duration: 800, disabled: reduced })
+  const progress = useProgress(`${project.type}-${project.aspect}-${project.frame}-${replay}`, { duration: 800, disabled: reduced })
 
   const config = useMemo(() => ({ ...project, locale, strings: { total: t('chart.total'), empty: t('chart.empty'), series: t('chart.series') } }), [project, locale, t])
   const scene = useMemo(() => buildScene(config, { progress, siteTheme }), [config, progress, siteTheme])
